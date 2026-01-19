@@ -1,2 +1,3 @@
 # Swishr
-An AI Agent ... In Progress............
+An AI Chat Bot Powered by Ollama.
+Can , Will only talk about NBA post 2023
