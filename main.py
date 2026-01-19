@@ -74,7 +74,8 @@ chat_container = st.container()
 
 with chat_container:
     for msg in st.session_state.chat_history:
-        with st.chat_message(msg["role"]):
+        avatar = "👤" if msg["role"] == "user" else "🏀"
+        with st.chat_message(msg["role"], avatar=avatar):
             st.markdown(msg["content"])
 
 # ---- Spacer to keep input at bottom ----
@@ -109,7 +110,7 @@ if user_query:
     # Show and save user message
     st.session_state.chat_history.append({"role": "user", "content": user_query})
     with chat_container:
-        with st.chat_message("user"):
+        with st.chat_message("user", avatar='👤'):
             st.markdown(user_query)
 
     # Persist user message to DB
@@ -127,8 +128,9 @@ if user_query:
 
     # Stream and display assistant response
     with chat_container:
-        with st.chat_message("assistant"):
+        with st.chat_message("assistant", avatar='🏀'):
             try:
+                # Fixed: Added stream=True to get a generator
                 response_stream = get_answer(selected_model, st.session_state.chat_history, stream=True)
                 full_response = st.write_stream(response_stream)
             except Exception as e:
